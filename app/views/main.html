@@ -1,0 +1,110 @@
+<div class="ui segment">
+<form class="ui form" novalidate angular-validator angular-validator-submit='register(company)' name="regForm" ng-hide="regOk">
+    <div class="field">
+        <div class="ui labeled input">
+            <input ng-model="company.email" name="email" ng-pattern = '/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/' required type="text" placeholder="Email..." angular-validator-quiet> </div>
+    </div>
+    <div class="three fields">
+        <div class="field">
+            <div class="ui input">
+                <input ng-model="company.name" name="companyName" ng-required="true" type="text" placeholder="Company name..." angular-validator-quiet> </div>
+        </div>
+        <div class="field">
+            <div class="ui input">
+                <input ng-model="company.registration_number" name="registrationNumber" ng-required="true" type="text" placeholder="Registration number..." angular-validator-quiet> </div>
+        </div>
+        <div class="field drop-down-labeled">
+            <select ng-model="company.legal_structure" dropdown-simple class="ui dropdown" ng-required="true" name="companyLegalStructure">
+                <option value="">Legal Structure</option>
+                <option value="Limited Company">Limited Company</option>
+                <option value="Limited Partnership">Limited Partnership</option>
+                <option value="Limited Liability Partnership">Limited Liability Partnership</option>
+                <option value="Unincorporated Association"> Unincorporated Association</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+    </div>
+    <div class="ui items">
+        <div class="item" ng-repeat="sig in company.signatories">
+            <div class="content"> <a class="header">{{sig.forename}} {{sig.surname}}</a>
+                <div class="meta"> <span>{{sig.email}}</span> </div>
+                <div class="extra">
+                        <div class="ui right floated red button" ng-click="removeEntity('signatories', sig)">
+                          Delete
+                        </div>
+                      </div>
+            </div>
+        </div>
+    </div>
+    <div class="ui warning visible message" ng-show="missingSignatories"> <i class="close icon" ng-click="hideMessage('missingSignatories')"></i>
+        <div class="header"> You must add at least one signatory! </div> Fill the fields below then click on Add Signatory </div>
+    <div class="four fields">
+       
+        <div class="field">
+            <div class="ui input" ng-class="{'has-error': !signatory.email && signatoryCheck}">
+                <input ng-model="signatory.email" name="signatoryEmail" type="text" placeholder="Signatory Email..."> </div>
+        </div>
+        <div class="field">
+            <div class="ui input" ng-class="{'has-error': !signatory.forename && signatoryCheck}">
+                <input ng-model="signatory.forename" name="signatoryForeman" type="text" placeholder="Signatory Forename..."> </div>
+        </div>
+        <div class="field">
+            <div class="ui input" ng-class="{'has-error': !signatory.surname && signatoryCheck}">
+                <input ng-model="signatory.surname" name="signatorySurname" type="text" placeholder="Signatory Surname..."> </div>
+        </div>
+         <div class="field">
+            <div class="ui blue button" ng-click="addSignatories(signatory)">Add Signatory</div>
+        </div>
+    </div>
+    <div class="ui items">
+        <div class="item" ng-repeat="ad in company.admins">
+            <div class="content"> <a class="header">{{ad.forename}} {{ad.surname}}</a>
+                <div class="meta"> <span>{{ad.email}}</span> </div>
+                    <div class="extra">
+                        <div class="ui right floated red button" ng-click="removeEntity('admins', ad)">
+                          Delete
+                        </div>
+                      </div>
+            </div>
+            
+        </div>
+    </div>
+    <div class="ui warning visible message" ng-show="missingAdmins"> 
+        <i class="close icon" ng-click="hideMessage('missingAdmins')"></i>
+        <div class="header"> You must add at least one admin! </div>
+        Fill the fields below then click on Add Admin </div>
+    <div class="four fields">
+      
+        <div class="field">
+            <div class="ui input" ng-class="{'has-error': !admin.email && adminCheck}">
+                <input ng-model="admin.email" name="adminEmail" type="text" placeholder="Admin Email..." > </div>
+        </div>
+        <div class="field">
+            <div class="ui input" ng-class="{'has-error': !admin.forename && adminCheck}">
+                <input ng-model="admin.forename" name="adminForename" type="text" placeholder="Admin Forename..."> </div>
+        </div>
+        <div class="field">
+            <div class="ui input" ng-class="{'has-error': !admin.surname && adminCheck}">
+                <input ng-model="admin.surname" name="adminSurname" type="text" placeholder="Admin Surname..."> </div>
+        </div>
+          <div class="field">
+            <div class="ui blue button" ng-click="addAdmin(admin)">Add Admin</div>
+        </div>
+    </div>
+    
+    
+    <input type="submit" value="Register" class="ui huge green button"> </form>
+        <div class="ui success visible message" ng-show="regOk"> 
+        <div class="header">Registration successful!</div>
+        An email has been sent to your email address</div>
+    
+    <span ng-show="errors">
+    <div class="ui error visible message" ng-repeat="error in errors"> 
+        <div class="header">{{error.title}}</div>
+      <ul class="list">
+        <li>{{error.detail}}</li>
+      </ul>
+    
+    </div>
+    </span>
+    </div>

@@ -1,0 +1,18 @@
+.has-error input,
+.has-error select {
+    border-color: red !important;
+}
+
+div.has-error label.control-label {
+    display: none !important;
+}
+
+.description-text {
+    text-align: center;
+}
+.description-text > span {
+    text-align: center;
+    font-size: 30px;
+    line-height: 2em;
+    color: #767676;
+}
